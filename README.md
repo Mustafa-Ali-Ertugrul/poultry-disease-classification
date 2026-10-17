@@ -39,6 +39,9 @@ python -m venv .venv
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Download dataset from Hugging Face (private; run `hf auth login` first)
+python scripts/download_dataset.py
 ```
 
 ### Training

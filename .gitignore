@@ -46,8 +46,14 @@ htmlcov/
 
 # ============================================
 # Datasets (large, not tracked in git)
+# Download: python scripts/download_dataset.py
 # ============================================
+.cache/huggingface/
 final_dataset_10_classes/
+prepared_duck_3class/
+prepared_duck_3class_cleaned/
+prepared_goose_2class/
+prepared_goose_2class_cleaned/
 final_dataset_split/
 final_dataset_clean/
 clean_dataset_split/
