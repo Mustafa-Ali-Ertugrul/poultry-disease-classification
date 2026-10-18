@@ -29,6 +29,7 @@ matplotlib>=3.7.0
 tqdm>=4.65.0
 
 # Dataset/image collection
+huggingface_hub>=0.23.0
 kaggle>=1.6.17
 ddgs>=9.0.0
 requests>=2.31.0

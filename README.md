@@ -5,7 +5,7 @@ Supports **multi-species** classification: Chicken 🐔, Goose 🦢, and Duck �
 
 ## 📊 Dataset
 
-10 disease classes with 500+ images each per species:
+Chicken: 10 disease classes, 9,049 images (133–2,442 per class):
 - **Avian_Influenza** - Avian Influenza (Bird Flu)
 - **Coccidiosis** - Coccidiosis infection
 - **Fowl_Pox** - Fowl Pox disease
@@ -18,11 +18,13 @@ Supports **multi-species** classification: Chicken 🐔, Goose 🦢, and Duck �
 - **Salmonella** - Salmonella infection
 
 ### Supported Species
-| Species | Dataset | Status |
-|---------|---------|--------|
-| 🐔 Chicken | `final_dataset_10_classes` | ✅ Ready |
-| 🦢 Goose | `goose_dataset_10_classes` | ✅ Ready |
-| 🦆 Duck | `duck_dataset_10_classes` | ✅ Ready |
+| Species | Dataset | Classes | Images | Status |
+|---------|---------|---------|--------|--------|
+| 🐔 Chicken | `final_dataset_10_classes` | 10 | 9,049 | ✅ Ready |
+| 🦢 Goose | `prepared_goose_2class_cleaned` | 2 (Fowl_Pox, Goose_Parvovirus) | 75 | ⚠️ Limited |
+| 🦆 Duck | `prepared_duck_3class_cleaned` | 3 (Bumblefoot, Duck_Plague, Fowl_Pox) | 155 | ⚠️ Limited |
+
+Goose and duck data are small, pre-split (`train/val/test`) sets; train them with `training/train.py --data-dir` (see below). The 10-class `goose_dataset_10_classes/` and `duck_dataset_10_classes/` folders used by `--species goose/duck` are not populated.
 
 ## 🚀 Quick Start
 
@@ -39,6 +41,9 @@ python -m venv .venv
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Download dataset from Hugging Face (private; run `hf auth login` first)
+python scripts/download_dataset.py
 ```
 
 ### Training
@@ -47,11 +52,11 @@ pip install -r requirements.txt
 # Train ViT-B/16 for chicken (default)
 python train_model.py --model vit_b16
 
-# Train for goose
-python train_model.py --model vit_b16 --species goose
+# Train for goose (2 classes)
+python training/train.py --data-dir prepared_goose_2class_cleaned
 
-# Train for duck
-python train_model.py --model vit_b16 --species duck
+# Train for duck (3 classes)
+python training/train.py --data-dir prepared_duck_3class_cleaned
 
 # Train ResNet50
 python train_model.py --model resnet50 --species chicken
@@ -108,9 +113,9 @@ curl.exe -X POST "http://localhost:8000/predict" -F "file=@test_image.jpg"
 │   └── main.py                # Multi-species prediction API
 ├── scripts/                   # Training and utility scripts
 ├── tests/                     # Unit tests
-├── final_dataset_10_classes/  # Chicken dataset
-├── duck_dataset_10_classes/   # Duck dataset
-├── goose_dataset_10_classes/  # Goose dataset
+├── final_dataset_10_classes/  # Chicken dataset (downloaded from HF)
+├── prepared_duck_3class_cleaned/   # Duck dataset, train/val/test (downloaded from HF)
+├── prepared_goose_2class_cleaned/  # Goose dataset, train/val/test (downloaded from HF)
 ├── models/                    # Trained model weights
 ├── vit_poultry_results/       # ViT-B/16 training results
 ├── resnext_poultry_results/   # ResNeXt-50 results
